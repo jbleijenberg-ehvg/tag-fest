@@ -1,0 +1,35 @@
+on:
+    push:
+        tags:
+            - '[0-9]+.[0-9]+.[0-9]+'
+
+name: Deploy Application
+jobs:
+    set-version-tags:
+        name: Set version tags
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.prepare-version-tags.outputs.version }}
+            tags: ${{ steps.prepare-version-tags.outputs.tags }}
+        steps:
+            - name: Prepare image version and tags
+              id: prepare-version-tags
+              run: |
+                  DOCKER_IMAGE=${{ vars.DOCKER_REPOSITORY }}
+                  VERSION=${GITHUB_REF#refs/tags/}
+                  VERSION=${VERSION//\//-}
+                  TAGS="${DOCKER_IMAGE}:${VERSION}"
+
+                  if [[ $VERSION =~ ^[0-9]+.[0-9]+[0.9]+$ ]]; then
+                    MINOR=${VERSION%.*}
+                    MAJOR=${MINOR%.*}
+                    TAGS="$TAGS,${DOCKER_IMAGE}:${MINOR},${DOCKER_IMAGE}:${MAJOR},${DOCKER_IMAGE}:latest"
+                  fi
+
+                  echo "version=${VERSION}" >> $GITHUB_ENV
+                  echo "tags=${TAGS}" >> $GITHUB_ENV
+
+    action:
+        name: run workflow
+        run: |
+            echo image.tag=${{ needs.set-version-tags.outputs.version }}
