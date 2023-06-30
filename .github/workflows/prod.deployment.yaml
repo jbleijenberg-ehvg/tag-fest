@@ -36,8 +36,7 @@ jobs:
               run:
                 echo "rc-commit-id=$(git log -1 --pretty=format:"%h")" >> $GITHUB_OUTPUT
 
-
-    action:
+    validate-commit-ids:
         name: Run debug action
         runs-on: ubuntu-latest
         needs:
@@ -50,3 +49,21 @@ jobs:
               run: |
                   echo $(git log -1 --pretty=format:"%h")
                   echo ${{ needs.set-version-tags.outputs.rc-commit-id }}
+                  
+    deploy-prod:
+        name: Retag and Deploy to Production
+        runs-on: ubuntu-latest
+        needs:
+            - validate-commit-ids
+        steps:
+            - name: Login to GHCR
+              uses: docker/login-action@v2
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+            - name: Retag Release Candidate to Production
+              run: |
+                  docker buildx imagetools create \
+                  --tag ghcr.io/jbleijenberg-ehvg/tag-fest:${{ steps.prepare-version-tags.outputs.version }} \
+                  ghcr.io/jbleijenberg-ehvg/tag-fest:${{ steps.prepare-version-tags.outputs.version }}rc
