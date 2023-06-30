@@ -47,5 +47,5 @@ jobs:
                   fetch-depth: 0
             - name: run workflow
               run: |
-                  echo pd-commit-id=$(git log -1 --pretty=format:"%H")
-                  echo rc-commit-id=${{ needs.set-version-tags.outputs.rctag }}
+                  echo $(git log -1 --pretty=format:"%H")
+                  echo ${{ needs.set-version-tags.outputs.rctag }}
