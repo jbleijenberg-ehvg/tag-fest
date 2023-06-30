@@ -11,7 +11,7 @@ jobs:
         outputs:
             version: ${{ steps.prepare-version-tags.outputs.version }}
             tags: ${{ steps.prepare-version-tags.outputs.tags }}
-            rctag: ${{ steps.save-acceptance-commit-id.outputs.rctag }}
+            rc-commit-id: ${{ steps.save-acceptance-commit-id.outputs.rc-commit-id }}
         steps:
             - name: Prepare image version and tags
               id: prepare-version-tags
@@ -34,7 +34,7 @@ jobs:
             - name: Save Acceptance Commit ID
               id: save-acceptance-commit-id
               run:
-                echo "rctag=$(git log -1 --pretty=format:"%H")" >> $GITHUB_OUTPUT
+                echo "rc-commit-id=$(git log -1 --pretty=format:"%H")" >> $GITHUB_OUTPUT
 
     action:
         name: Run debug action
@@ -47,5 +47,5 @@ jobs:
                   fetch-depth: 0
             - name: run workflow
               run: |
-                  echo image.tag=${{ needs.set-version-tags.outputs.tags }}
-                  echo image.rctag=${{ needs.set-version-tags.outputs.rctag }}
+                  echo pd-commit-id=$(git log -1 --pretty=format:"%H")
+                  echo rc-commit-id=${{ needs.set-version-tags.outputs.rctag }}
