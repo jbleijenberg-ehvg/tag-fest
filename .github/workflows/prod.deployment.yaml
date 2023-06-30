@@ -36,6 +36,7 @@ jobs:
               run:
                 echo "rc-commit-id=$(git log -1 --pretty=format:"%h")" >> $GITHUB_OUTPUT
 
+
     action:
         name: Run debug action
         runs-on: ubuntu-latest
