@@ -65,5 +65,5 @@ jobs:
             - name: Retag Release Candidate to Production
               run: |
                   docker buildx imagetools create \
-                  --tag ghcr.io/jbleijenberg-ehvg/tag-fest:${{ needs.prepare-version-tags.outputs.version }} \
-                  ghcr.io/jbleijenberg-ehvg/tag-fest:${{ needs.prepare-version-tags.outputs.version }}rc
+                  --tag ghcr.io/jbleijenberg-ehvg/tag-fest:${{ needs.set-version-tags.outputs.version }} \
+                  ghcr.io/jbleijenberg-ehvg/tag-fest:${{ needs.set-version-tags.outputs.version }}rc
