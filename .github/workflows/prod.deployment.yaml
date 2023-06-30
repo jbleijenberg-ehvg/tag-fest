@@ -11,6 +11,7 @@ jobs:
         outputs:
             version: ${{ steps.prepare-version-tags.outputs.version }}
             tags: ${{ steps.prepare-version-tags.outputs.tags }}
+            rctag: ${{ steps.save-acceptance-commit-id.outputs.rctag }}
         steps:
             - name: Prepare image version and tags
               id: prepare-version-tags
@@ -20,14 +21,20 @@ jobs:
                   VERSION=${VERSION//\//-}
                   TAGS="${DOCKER_IMAGE}:${VERSION}"
 
-                  if [[ $VERSION =~ ^[0-9]+.[0-9]+[0.9]+$ ]]; then
-                    MINOR=${VERSION%.*}
-                    MAJOR=${MINOR%.*}
-                    TAGS="$TAGS,${DOCKER_IMAGE}:${MINOR},${DOCKER_IMAGE}:${MAJOR},${DOCKER_IMAGE}:latest"
-                  fi
+                  MINOR=${VERSION%.*}
+                  MAJOR=${MINOR%.*}
+                  TAGS="$TAGS,${DOCKER_IMAGE}:${MINOR},${DOCKER_IMAGE}:${MAJOR},${DOCKER_IMAGE}:latest"
 
                   echo "version=${VERSION}" >> $GITHUB_OUTPUT
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
+            - uses: actions/checkout@v3
+              with:
+                  ref: ${{ needs.set-version-tags.outputs.version }}rc
+                  fetch-depth: 0
+            - name: Save Acceptance Commit ID
+              id: save-acceptance-commit-id
+              run:
+                echo "rctag=$(git log -1 --pretty=format:"%H")" >> $GITHUB_OUTPUT
 
     action:
         name: Run debug action
@@ -35,6 +42,10 @@ jobs:
         needs:
             - set-version-tags
         steps:
+            - uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
             - name: run workflow
               run: |
-                  echo image.tag=${{ needs.set-version-tags.outputs.version }}
+                  echo image.tag=${{ needs.set-version-tags.outputs.tags }}
+                  echo image.rctag=${{ needs.set-version-tags.outputs.rctag }}
