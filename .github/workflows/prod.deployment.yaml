@@ -29,7 +29,7 @@ jobs:
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
             - uses: actions/checkout@v3
               with:
-                  ref: ${{ steps.set-version-tags.outputs.version }}rc
+                  ref: ${{ steps.prepare-version-tags.outputs.version }}rc
                   fetch-depth: 0
             - name: Save Acceptance Commit ID
               id: save-acceptance-commit-id
