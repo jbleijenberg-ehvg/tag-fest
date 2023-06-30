@@ -15,13 +15,13 @@ jobs:
             - name: Prepare image version and tags
               id: prepare-version-tags
               run: |
-                  DOCKER_IMAGE=${{ vars.DOCKER_REPOSITORY }}
+                  DOCKER_IMAGE=derp
                   VERSION=${GITHUB_REF#refs/tags/}
                   VERSION=${VERSION//\//-}
                   TAGS="${DOCKER_IMAGE}:${VERSION}"
 
-                  echo "version=${VERSION}" >> $GITHUB_ENV
-                  echo "tags=${TAGS}" >> $GITHUB_ENV
+                  echo "version=${VERSION}" >> $GITHUB_OUTPUT
+                  echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
     action:
         name: Run debug action
