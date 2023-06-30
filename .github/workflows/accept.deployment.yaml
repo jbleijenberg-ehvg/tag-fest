@@ -27,6 +27,6 @@ jobs:
         name: Run debug action
         runs-on: ubuntu-latest
         steps:
-            name: run workflow
-            run: |
-                echo image.tag=${{ needs.set-version-tags.outputs.version }}
+            - name: run workflow
+              run: |
+                  echo image.tag=${{ needs.set-version-tags.outputs.version }}
