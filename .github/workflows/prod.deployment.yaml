@@ -34,7 +34,7 @@ jobs:
             - name: Save Acceptance Commit ID
               id: save-acceptance-commit-id
               run:
-                echo "rc-commit-id=$(git log -1 --pretty=format:"%H")" >> $GITHUB_OUTPUT
+                echo "rc-commit-id=$(git log -1 --pretty=format:"%h")" >> $GITHUB_OUTPUT
 
     action:
         name: Run debug action
@@ -47,5 +47,5 @@ jobs:
                   fetch-depth: 0
             - name: run workflow
               run: |
-                  echo "$(git log -1 --pretty=format:"%H")"
-                  echo ${{ needs.set-version-tags.outputs.rctag }}
+                  echo $(git log -1 --pretty=format:"%h")
+                  echo ${{ needs.set-version-tags.outputs.rc-commit-id }}
