@@ -33,8 +33,8 @@ jobs:
                   echo "rc-version=$(git tag --list '${VERSION}-rc.*' | tail -1)" >> $GITHUB_OUTPUT
                   echo "version=${VERSION}" >> $GITHUB_OUTPUT
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
-              
-                  echo ${GITHUB_OUTPUT}
+
+            - run: git tag --list '${VERSION}-rc.*' | tail -1
 
     deploy-prod:
         name: Retag and Deploy to Production
