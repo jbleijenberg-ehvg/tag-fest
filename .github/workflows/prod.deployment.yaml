@@ -34,7 +34,10 @@ jobs:
                   echo "version=${VERSION}" >> $GITHUB_OUTPUT
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
 
-            - run: git tag --list "${{ needs.set-version-tags.outputs.version }}-rc.*" | tail -1
+            - run: |
+                VERSION=${GITHUB_REF#refs/tags/}
+                VERSION=${VERSION//\//-}
+                git tag --list "${VERSION}-rc.*" | tail -1
 
     deploy-prod:
         name: Retag and Deploy to Production
