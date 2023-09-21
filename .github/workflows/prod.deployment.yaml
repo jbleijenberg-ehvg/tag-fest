@@ -28,7 +28,7 @@ jobs:
 
                   git fetch --tags
                   
-                  RC_VERSION=$(git tag --list '${VERSION}-rc.*')
+                  RC_VERSION=$(git tag --list '${VERSION}-rc.*' | tail -1)
                   echo "rc-version=${RC_VERSION}" >> $GITHUB_OUTPUT
                   echo "version=${VERSION}" >> $GITHUB_OUTPUT
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
