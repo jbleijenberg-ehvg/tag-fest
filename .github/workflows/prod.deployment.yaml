@@ -30,14 +30,9 @@ jobs:
 
                   git fetch --tags
                   
-                  echo "rc-version=$(git tag --list '${VERSION}-rc.*' | tail -1)" >> $GITHUB_OUTPUT
+                  echo "rc-version=$(git tag --list "${VERSION}-rc.*" | tail -1)" >> $GITHUB_OUTPUT
                   echo "version=${VERSION}" >> $GITHUB_OUTPUT
                   echo "tags=${TAGS}" >> $GITHUB_OUTPUT
-
-            - run: |
-                VERSION=${GITHUB_REF#refs/tags/}
-                VERSION=${VERSION//\//-}
-                git tag --list "${VERSION}-rc.*" | tail -1
 
     deploy-prod:
         name: Retag and Deploy to Production
