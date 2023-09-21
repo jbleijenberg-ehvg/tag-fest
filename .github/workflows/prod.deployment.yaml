@@ -11,8 +11,7 @@ jobs:
         outputs:
             version: ${{ steps.prepare-version-tags.outputs.version }}
             tags: ${{ steps.prepare-version-tags.outputs.tags }}
-            rc-commit-id: ${{ steps.save-acceptance-commit-id.outputs.rc-commit-id }}
-            rc-version: ${{ steps.save-acceptance-commit-id.outputs.rc-version }}
+            rc-version: ${{ steps.prepare-version-tags.outputs.rc-version }}
         steps:
             - uses: actions/checkout@v4
               with:
