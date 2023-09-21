@@ -14,6 +14,9 @@ jobs:
             rc-commit-id: ${{ steps.save-acceptance-commit-id.outputs.rc-commit-id }}
             rc-version: ${{ steps.save-acceptance-commit-id.outputs.rc-version }}
         steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
             - name: Prepare image version and tags
               id: prepare-version-tags
               run: |
