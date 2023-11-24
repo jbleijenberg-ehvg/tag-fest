@@ -1,0 +1,34 @@
+on:
+  workflow_dispatch:
+    inputs:
+      application:
+        description: The application to deploy to Netlify
+        required: true
+        type: choice
+        options:
+          - blueclinic-checkout
+          - consult-system
+          - dokteronline
+          - dokteronline-checkout
+          - pharmacy-service
+
+name: Deploy Netlify (Test)
+
+jobs:
+  prepare:
+    name: Prepare build environment
+    runs-on: ubuntu-latest
+    outputs:
+      branch: ${{ steps.current-branch.outputs.branch }}
+    steps:
+      - name: Set Netlify URL prefix
+        id: netlify-prefix
+        uses: superbrave/switch-case-action@v1
+        with:
+          default: 'dokteronline-new'
+          conditionals-with-values:
+            ${{ ${{ inputs.application }} == "dokteronline" }} => dokteronline-new
+      - name: derp
+        run: |
+          echo ${{ needs.prepare.netlify-prefix.outputs.value }}
+          echo ${{ inputs.application }}
