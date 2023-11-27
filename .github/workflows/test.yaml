@@ -31,5 +31,5 @@ jobs:
             ${{ inputs.application }} == "consult-system" => consult-system-new
       - name: derp
         run: |
-          echo ${{ needs.prepare.outputs.value }}
+          echo ${{ steps.prepare.outputs.value }}
           echo ${{ inputs.application }}
