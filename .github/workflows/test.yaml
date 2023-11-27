@@ -19,7 +19,7 @@ jobs:
     name: Prepare build environment
     runs-on: ubuntu-latest
     outputs:
-      branch: ${{ steps.netlify-prefix.outputs.value }}
+      value: ${{ steps.netlify-prefix.outputs.value }}
     steps:
       - name: Set Netlify URL prefix
         id: netlify-prefix
@@ -31,5 +31,5 @@ jobs:
             ${{ inputs.application }} == "consult-system" => consult-system-new
       - name: derp
         run: |
-          echo ${{ needs.prepare.netlify-prefix.outputs.value }}
+          echo ${{ needs.prepare.outputs.value }}
           echo ${{ inputs.application }}
