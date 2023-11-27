@@ -19,7 +19,7 @@ jobs:
     name: Prepare build environment
     runs-on: ubuntu-latest
     outputs:
-      branch: ${{ steps.current-branch.outputs.branch }}
+      branch: ${{ steps.netlify-prefix.outputs.value }}
     steps:
       - name: Set Netlify URL prefix
         id: netlify-prefix
