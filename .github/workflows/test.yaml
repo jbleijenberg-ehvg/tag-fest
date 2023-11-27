@@ -27,8 +27,8 @@ jobs:
         with:
           default: dokteronline-new
           conditionals-with-values: |
-            ${{ inputs.application }} == dokteronline => dokteronline-new
-            ${{ inputs.application }} == consultsystem => consult-system-new
+            "${{ inputs.application }}" == "dokteronline" => dokteronline-new
+            "${{ inputs.application }}" == "consultsystem" => consult-system-new
       - name: derp
         run: |
           echo ${{ steps.netlify-prefix.outputs.value }}
