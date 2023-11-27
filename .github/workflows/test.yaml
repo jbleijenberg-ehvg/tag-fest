@@ -7,7 +7,7 @@ on:
         type: choice
         options:
           - blueclinic-checkout
-          - consult-system
+          - consultsystem
           - dokteronline
           - dokteronline-checkout
           - pharmacy-service
@@ -28,7 +28,7 @@ jobs:
           default: dokteronline-new
           conditionals-with-values: |
             ${{ inputs.application }} == dokteronline => dokteronline-new
-            ${{ inputs.application }} == consult-system => consult-system-new
+            ${{ inputs.application }} == consultsystem => consult-system-new
       - name: derp
         run: |
           echo ${{ steps.netlify-prefix.outputs.value }}
