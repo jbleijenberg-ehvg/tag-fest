@@ -23,9 +23,9 @@ jobs:
     steps:
       - name: Set Netlify URL prefix
         id: netlify-prefix
-        uses: superbrave/switch-case-action@v1
+        uses: superbrave/switch-case-action@v1.0.0
         with:
-          default: 'dokteronline-new'
+          default: dokteronline-new
           conditionals-with-values:
             ${{ inputs.application }} == "dokteronline" => dokteronline-new
             ${{ inputs.application }} == "consult-service" => consult-service-new
