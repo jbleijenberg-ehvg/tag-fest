@@ -31,5 +31,5 @@ jobs:
             ${{ inputs.application }} == "consult-system" => consult-system-new
       - name: derp
         run: |
-          echo ${{ steps.prepare.outputs.value }}
+          echo ${{ steps.netlify-prefix.outputs.value }}
           echo ${{ inputs.application }}
