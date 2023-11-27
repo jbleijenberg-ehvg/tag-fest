@@ -26,7 +26,7 @@ jobs:
         uses: superbrave/switch-case-action@v1.0.0
         with:
           default: dokteronline-new
-          conditionals-with-values:
+          conditionals-with-values: |
             ${{ inputs.application }} == dokteronline => dokteronline-new
             ${{ inputs.application }} == consult-system => consult-system-new
       - name: derp
