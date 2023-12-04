@@ -7,7 +7,7 @@ on:
         type: choice
         options:
           - blueclinic-checkout
-          - consultsystem
+          - consult-system
           - dokteronline
           - dokteronline-checkout
           - pharmacy-service
@@ -19,17 +19,26 @@ jobs:
     name: Prepare build environment
     runs-on: ubuntu-latest
     outputs:
-      value: ${{ steps.netlify-prefix.outputs.value }}
+      netlify-prefix: ${{ steps.netlify-prefix.outputs.value }}
     steps:
       - name: Set Netlify URL prefix
         id: netlify-prefix
-        uses: superbrave/switch-case-action@v1.0.0
-        with:
-          default: dokteronline-new
-          conditionals-with-values: |
-            "${{ inputs.application }}" == "dokteronline" => dokteronline-new
-            "${{ inputs.application }}" == "consultsystem" => consult-system-new
+        run: |
+          if [[ "${{ inputs.application }}" == "blueclinic-checkout" ]]; then
+            PREFIX=blueclinic-checkout-new
+          elif [[ "${{ inputs.application }}" == "consult-system" ]]; then
+            PREFIX=consult-system-new
+          elif [[ "${{ inputs.application }}" == "dokteronline" ]]; then
+            PREFIX=dokteronline-new
+          elif [[ "${{ inputs.application }}" == "dokteronline-checkout" ]]; then
+            PREFIX=dokteronline-checkout-new
+          elif [[ "${{ inputs.application }}" == "pharmacy-service" ]]; then
+            PREFIX=pharmacy-service-new
+          fi
+          
+          echo "prefix=${PREFIX}" >> $GITHUB_OUTPUT
+
       - name: derp
         run: |
-          echo ${{ steps.netlify-prefix.outputs.value }}
+          echo ${{ steps.netlify-prefix.outputs.prefix }}
           echo ${{ inputs.application }}
