@@ -22,7 +22,9 @@ jobs:
   etst:
     name: Prepare build environment
     runs-on: ubuntu-latest
+    needs:
+      - set-verison-tags
     steps:
       - name: derp
         run: |
-          echo ${{ steps.set-version-tags.outputs.version }}
+          echo ${{ needs.set-version-tags.outputs.version }}
