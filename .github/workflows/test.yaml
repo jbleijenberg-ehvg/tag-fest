@@ -23,7 +23,7 @@ jobs:
     name: Prepare build environment
     runs-on: ubuntu-latest
     needs:
-      - set-verison-tags
+      - set-version-tags
     steps:
       - name: derp
         run: |
