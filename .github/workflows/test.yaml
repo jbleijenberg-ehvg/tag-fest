@@ -1,44 +1,28 @@
 on:
-  workflow_dispatch:
-    inputs:
-      application:
-        description: The application to deploy to Netlify
-        required: true
-        type: choice
-        options:
-          - blueclinic-checkout
-          - consult-system
-          - dokteronline
-          - dokteronline-checkout
-          - pharmacy-service
-
-name: Deploy Netlify (Test)
+  release:
+    types:
+      - prereleased
 
 jobs:
-  prepare:
-    name: Prepare build environment
+  set-version-tags:
+    name: Set version tags
     runs-on: ubuntu-latest
     outputs:
-      netlify-prefix: ${{ steps.netlify-prefix.outputs.value }}
-    steps:
-      - name: Set Netlify URL prefix
-        id: netlify-prefix
-        run: |
-          if [[ "${{ inputs.application }}" == "blueclinic-checkout" ]]; then
-            PREFIX=blueclinic-checkout-new
-          elif [[ "${{ inputs.application }}" == "consult-system" ]]; then
-            PREFIX=consult-system-new
-          elif [[ "${{ inputs.application }}" == "dokteronline" ]]; then
-            PREFIX=dokteronline-new
-          elif [[ "${{ inputs.application }}" == "dokteronline-checkout" ]]; then
-            PREFIX=dokteronline-checkout-new
-          elif [[ "${{ inputs.application }}" == "pharmacy-service" ]]; then
-            PREFIX=pharmacy-service-new
-          fi
-          
-          echo "prefix=${PREFIX}" >> $GITHUB_OUTPUT
+      version: ${{ steps.prepare-version-tags.outputs.version }}
 
+    steps:
+      - name: Prepare image version and tags
+        id: prepare-version-tags
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=${VERSION//\//-}
+          
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
+  etst:
+    name: Prepare build environment
+    runs-on: ubuntu-latest
+    steps:
       - name: derp
         run: |
-          echo ${{ steps.netlify-prefix.outputs.prefix }}
-          echo ${{ inputs.application }}
+          echo ${{ steps.set-version-tags.outputs.version }}
