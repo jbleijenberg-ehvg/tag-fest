@@ -6,7 +6,7 @@ on:
 jobs:
   build-application:
     name: Build Application
-    runs-on: ubuntu-24-04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: colpal/actions-clean@v1
       - uses: actions/checkout@v4
