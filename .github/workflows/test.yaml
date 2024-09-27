@@ -30,8 +30,7 @@ jobs:
         with:
           push: false
           cache-from: |
-            type=registry,ref=ghcr.io/superbrave/php:8.3
-            type=registry,ref=ghcr.io/superbrave/php:8.3-pcov
+            type=registry,ref=php:8.3-alpine
             type=registry,ref=ghcr.io/jbleijenberg/tag-fest:cache
           tags: test:${{ github.run_id }}
           outputs: type=docker,dest=.docker/test-${{ github.run_id }}.tar
