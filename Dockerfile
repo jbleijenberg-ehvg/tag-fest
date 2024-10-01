@@ -10,4 +10,4 @@ WORKDIR /var/www
 
 COPY . /var/www
 
-RUN /usr/local/bin/composer i --ignore-platform-reqs || true
+RUN --mount=type=cache,target=/var/www/vendor /usr/local/bin/composer i --ignore-platform-reqs || true
