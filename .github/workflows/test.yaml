@@ -24,6 +24,8 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull image
+        run: docker pull ghcr.io/jbleijenberg-ehvg/tag-fest:cache
       - name: Build image
         id: build
         uses: docker/build-push-action@v6
