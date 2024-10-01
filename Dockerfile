@@ -1,9 +1,9 @@
 FROM php:8.3-alpine
 
-RUN apk update && apk upgrade --ignore libcurl
+RUN apk update && apk upgrade --ignore libcurl && apk add bash
 
 WORKDIR /var/www
 
 COPY . /var/www
 
-RUN composer i --ignore-platform-reqs || true
+RUN /usr/local/bin/composer i --ignore-platform-reqs || true
