@@ -1,13 +1,9 @@
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        type: string
-        description: Select the tag to deploy to production
 
 jobs:
   deploy:
     name: "Deploy application"
     runs-on: ubuntu-24.04
     steps:
-      - run: "echo ${{ inputs.tag }}"
+      - run: "echo ${{ github.ref_name }}"
