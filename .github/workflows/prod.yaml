@@ -2,7 +2,7 @@ name: Publish to Pre Prod
 
 on:
   release:
-    - prereleased
+    - released
       
 jobs:
   validate-tag:
@@ -11,7 +11,7 @@ jobs:
       - name: Check tag name
         run: |
           TAG_NAME="${GITHUB_REF#refs/tags/}"
-          if [[ ! "$TAG_NAME" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}-rc ]]; then
+          if [[ ! "$TAG_NAME" =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3} ]]; then
             echo "❌ Invalid tag name: $TAG_NAME"
             exit 1
           else
