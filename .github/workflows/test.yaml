@@ -2,7 +2,8 @@ name: Publish to Pre Prod
 
 on:
   release:
-    - prereleased
+    types: 
+      - prereleased
       
 jobs:
   validate-tag:
