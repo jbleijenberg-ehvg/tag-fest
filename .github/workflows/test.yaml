@@ -3,7 +3,7 @@ name: Publish to Production
 on:
   push:
     tags:
-      - '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}'
+      - '[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}'
       
 jobs:
   deploy:
